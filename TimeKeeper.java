@@ -1,21 +1,22 @@
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 
-public class TimeKeeper {
-    public static ArrayList<String> loggedIn = new ArrayList<>();
+class TimeKeeper {
+    private static ArrayList<String> loggedIn = new ArrayList<>();
     private static ArrayList<BigDecimal> times = new ArrayList<>();
     private static ArrayList<String> usersList= new ArrayList<>();
     private static ArrayList<String> passwordList= new ArrayList<>();
     private static File records = new File("Records/records.csv");
     
-    public static void loadUsers(ArrayList users, ArrayList id){
+    static void loadUsers(ArrayList<String> users, ArrayList<String> id){
         usersList = users;
         passwordList = id;
     }
-    public static String routing(String id){
+    static String routing(String id){
         if(loggedIn.contains(id)){
             return logout(id);
         }else{
@@ -48,7 +49,7 @@ public class TimeKeeper {
 
             try {
                 final String NEWLINE = System.getProperty("line.separator");
-
+                boolean addTime = false;
                 ArrayList<String> names = new ArrayList<>();
                 ArrayList<String> hours = new ArrayList<>();
                 if (records.exists()) {
@@ -72,9 +73,18 @@ public class TimeKeeper {
                         names.add(name);
                         hours.add("0.0");
                         index = names.indexOf(name);
+                        if(!addTime) {
+                            time = time + Double.parseDouble(hours.get(index));
+                            hours.set(index, Double.toString(time));
+                            addTime = true;
+                        }
                     }
-                    time = time + Double.parseDouble(hours.get(index));
-                    hours.set(index, Double.toString(time));
+                    if(!addTime) {
+                        index = names.indexOf(name);
+                        time = time + Double.parseDouble(hours.get(index));
+                        hours.set(index, Double.toString(time));
+                        addTime = true;
+                    }
                     index = 0;
                     BufferedWriter bw = new BufferedWriter(new FileWriter(records));
                     while (index < names.size() && index < hours.size()) {
@@ -94,14 +104,16 @@ public class TimeKeeper {
                     bw.close();
                     continue;
                 }
-
             } catch (IOException ex) {
                 break;
             }
             break;
         }
+        Calendar now = Calendar.getInstance();
+        if(now.get(Calendar.DAY_OF_WEEK) == GregorianCalendar.THURSDAY){
+            closeWeek();
+        }
     }
     private static void closeWeek(){
-        
     }
 }

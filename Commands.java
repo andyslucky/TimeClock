@@ -9,26 +9,27 @@ import java.math.BigInteger;
  */
 public class Commands {
 
-    private static void encrypt(String Password){
-        int[] key= {1951, 42, 5647,75,7187};
+    private static void encrypt(String Password) {
+        int[] key = {1951, 42, 5647, 75, 7187};
         int index = 0;
         char outputChar;
         char[] password = Password.toCharArray();
-        for(int i = 0; i< Password.length(); i++){
-            if (index == 3){
-                password[i] = (char)(password[i] + key[index]);
+        for (int i = 0; i < Password.length(); i++) {
+            if (index == 3) {
+                password[i] = (char) (password[i] + key[index]);
                 index = 0;
             }
-            password[i] = (char)(password[i] + key[index]);
+            password[i] = (char) (password[i] + key[index]);
             index++;
         }
-       try{
+       /*try{
            BufferedWriter bw = new BufferedWriter(new FileWriter(new File("admin.dat")));
 
        }
     }
     private static String decrypt(String Password){
 
+    }*/
     }
 
 }

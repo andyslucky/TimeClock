@@ -1,15 +1,12 @@
-import sun.util.calendar.Gregorian;
-
 import javax.swing.*;
 import java.io.*;
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 
 class TimeKeeper {
     private static ArrayList<String> loggedIn = new ArrayList<>();
-    private static ArrayList<BigDecimal> times = new ArrayList<>();
+    private static ArrayList<Long> times = new ArrayList<>();
     private static ArrayList<String> usersList= new ArrayList<>();
     private static ArrayList<String> passwordList= new ArrayList<>();
     private static File records = new File("Records/records.csv");
@@ -31,25 +28,25 @@ class TimeKeeper {
         }
     }
     private static String login(String id){
-        BigDecimal timeIn = new BigDecimal(System.currentTimeMillis());
+        long timeIn = System.currentTimeMillis();
         times.add(timeIn);
         loggedIn.add(id);
         return ": logged in!";
     }
     private static String logout(String id){
 
-        BigDecimal timeOut = new BigDecimal(System.currentTimeMillis());
+        long timeOut = System.currentTimeMillis();
         int index = loggedIn.indexOf(id);
-        BigDecimal total =(timeOut.subtract(times.get(index)));
-        long time = (total.longValue()/1000);
-        writeTime(Double.parseDouble(String.format("%.3f", ((double)(time /60.0)/60.0))), id);
+        long total =(timeOut -times.get(index));
+        long time = (total/1000);
+        writeTime(Double.parseDouble(String.format("%.3f", (time /60.0 /60.0))), id);
         loggedIn.remove(index);
         times.remove(index);
         if((now.get(Calendar.DAY_OF_WEEK) == GregorianCalendar.THURSDAY) && loggedIn.isEmpty()){
             closeWeek();
         }
         
-        return " worked a total of: " + String.format("%.3f", ((double)(time /60.0)/60.0)) + " hours";
+        return " worked a total of: " + String.format("%.3f", (time /60.0 /60.0)) + " hours";
     }
     private static void writeTime(double time,String id ) {
         File recDir = new File("Records");
@@ -78,6 +75,7 @@ class TimeKeeper {
                             break;
                         }
                     }
+
                     String name = usersList.get(passwordList.indexOf(id));
                     int index = 0;
                     if(!names.contains(name)) {

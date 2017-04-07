@@ -1,40 +1,38 @@
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 import java.io.*;
-
-
 /**
  * Created by Andrew on 1/7/2017.
- * @version 1.10
+ * @version 1.20
  */
 public class TimeClock extends JFrame {
     private static JFrame frame = new JFrame("TimeClock");
     private JPanel panel1;
     private JTabbedPane tabbedPane1;
-    private JButton button1;
+    private JButton loginButton;
     public JEditorPane editorPane1;
     private JTextField textField2;
     private JPasswordField passwordField1;
-    private JButton button2;
+    private JButton addUserButton;
     private JEditorPane editorPane2;
     private JPasswordField passwordField2;
     private JTextField textField3;
-    private JButton button3;
+    private JButton recordsButton;
     private JPasswordField passwordField3;
+    private JButton changeIDButton;
     private static final ArrayList<String> userList = new ArrayList<>();
     private static ArrayList<String> passwordList = new ArrayList<>();
     private static BufferedWriter bw;
     private static File data = new File("data.csv");
     private int lineCount = 0;
-
+    private final String NEWLINE = System.getProperty("line.separator");
     TimeClock() throws FileNotFoundException {
 
-        button1.addActionListener(new ActionListener() {
+        loginButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent ae) {
                 if(passwordList.contains(passwordField3.getText())) {
@@ -46,7 +44,7 @@ public class TimeClock extends JFrame {
 
             }
         });
-        button2.addActionListener(new ActionListener() {
+        addUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!passwordList.contains(passwordField1.getText())) {
@@ -54,7 +52,7 @@ public class TimeClock extends JFrame {
                         if(!passwordField1.getText().equals(passwordField2.getText())){
                             JOptionPane.showMessageDialog(null, "Sorry, ID fields do not match!");
                         }else {
-                            final String NEWLINE = System.getProperty("line.separator");
+
                             FileWriter out = new FileWriter(data);
                             BufferedReader br = new BufferedReader(new FileReader(data));
                             bw = new BufferedWriter(out);
@@ -77,7 +75,7 @@ public class TimeClock extends JFrame {
                 }
             }
         });
-        button3.addActionListener(new ActionListener() {
+        recordsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 editorPane2.setText("");
@@ -94,6 +92,23 @@ public class TimeClock extends JFrame {
                 }else{
                     JOptionPane.showMessageDialog(null, "Sorry the file could not be found!");
                 }
+            }
+        });
+        passwordField3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(passwordList.contains(passwordField3.getText())) {
+                    setMainText(userList.get(passwordList.indexOf(passwordField3.getText())) +  TimeKeeper.routing(passwordField3.getText()));
+                }else{
+                    setMainText("Sorry! Incorrect Password! Try Again!");
+                }
+
+            }
+        });
+        changeIDButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }
@@ -156,4 +171,7 @@ public class TimeClock extends JFrame {
         lineCount++;
     }
 
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
+}

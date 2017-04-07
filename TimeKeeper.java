@@ -1,9 +1,11 @@
+import sun.util.calendar.Gregorian;
+
+import javax.swing.*;
 import java.io.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 
 class TimeKeeper {
     private static ArrayList<String> loggedIn = new ArrayList<>();
@@ -11,7 +13,12 @@ class TimeKeeper {
     private static ArrayList<String> usersList= new ArrayList<>();
     private static ArrayList<String> passwordList= new ArrayList<>();
     private static File records = new File("Records/records.csv");
-    
+    private static Calendar now = Calendar.getInstance();
+    private static long yourmilliseconds = System.currentTimeMillis();
+    private static SimpleDateFormat sdf = new SimpleDateFormat("MM,dd,yyyy");
+    private static Date resultdate = new Date(yourmilliseconds);
+    private static String date = sdf.format(resultdate);
+    private static final String NEWLINE = System.getProperty("line.separator");
     static void loadUsers(ArrayList<String> users, ArrayList<String> id){
         usersList = users;
         passwordList = id;
@@ -30,6 +37,7 @@ class TimeKeeper {
         return ": logged in!";
     }
     private static String logout(String id){
+
         BigDecimal timeOut = new BigDecimal(System.currentTimeMillis());
         int index = loggedIn.indexOf(id);
         BigDecimal total =(timeOut.subtract(times.get(index)));
@@ -37,6 +45,9 @@ class TimeKeeper {
         writeTime(Double.parseDouble(String.format("%.3f", ((double)(time /60.0)/60.0))), id);
         loggedIn.remove(index);
         times.remove(index);
+        if((now.get(Calendar.DAY_OF_WEEK) == GregorianCalendar.THURSDAY) && loggedIn.isEmpty()){
+            closeWeek();
+        }
         
         return " worked a total of: " + String.format("%.3f", ((double)(time /60.0)/60.0)) + " hours";
     }
@@ -48,7 +59,7 @@ class TimeKeeper {
         while (true) {
 
             try {
-                final String NEWLINE = System.getProperty("line.separator");
+
                 boolean addTime = false;
                 ArrayList<String> names = new ArrayList<>();
                 ArrayList<String> hours = new ArrayList<>();
@@ -109,11 +120,35 @@ class TimeKeeper {
             }
             break;
         }
-        Calendar now = Calendar.getInstance();
-        if(now.get(Calendar.DAY_OF_WEEK) == GregorianCalendar.THURSDAY){
-            closeWeek();
-        }
+
+
     }
     private static void closeWeek(){
+        try{
+
+            Scanner input = new Scanner(records);
+            PrintStream ps = new PrintStream(new File("Records/"+date+".csv"));
+            ps.println("DATE: "+date);
+            ps.println("-----------------------");
+            String contents = "";
+            while(input.hasNextLine()){
+                String line =input.nextLine();
+                contents+=line+"\n";
+                ps.println(line);
+            }
+            ps.close();
+            double[] newHours = new double[usersList.size()];
+            int index = 0;
+            BufferedWriter bw = new BufferedWriter(new FileWriter(records));
+            while(index < usersList.size() && index < newHours.length){
+                bw.write(usersList.get(index) + "," + newHours[index] + NEWLINE);
+                index++;
+            }
+            bw.close();
+            JOptionPane.showMessageDialog(null, contents,"Hours for: "+date,
+                    JOptionPane.PLAIN_MESSAGE);
+        }catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Sorry could not find the specified file!");
+        }
     }
 }

@@ -13,10 +13,10 @@ import java.io.*;
  * @version 1.10
  */
 public class TimeClock extends JFrame {
+    private static JFrame frame = new JFrame("TimeClock");
     private JPanel panel1;
     private JTabbedPane tabbedPane1;
     private JButton button1;
-    private JTextField textField1;
     public JEditorPane editorPane1;
     private JTextField textField2;
     private JPasswordField passwordField1;
@@ -25,6 +25,7 @@ public class TimeClock extends JFrame {
     private JPasswordField passwordField2;
     private JTextField textField3;
     private JButton button3;
+    private JPasswordField passwordField3;
     private static final ArrayList<String> userList = new ArrayList<>();
     private static ArrayList<String> passwordList = new ArrayList<>();
     private static BufferedWriter bw;
@@ -36,8 +37,8 @@ public class TimeClock extends JFrame {
         button1.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent ae) {
-                if(passwordList.contains(textField1.getText())) {
-                    setMainText(userList.get(passwordList.indexOf(textField1.getText())) +  TimeKeeper.routing(textField1.getText()));
+                if(passwordList.contains(passwordField3.getText())) {
+                    setMainText(userList.get(passwordList.indexOf(passwordField3.getText())) +  TimeKeeper.routing(passwordField3.getText()));
                 }else{
                    setMainText("Sorry! Incorrect Password! Try Again!");
                 }
@@ -76,13 +77,33 @@ public class TimeClock extends JFrame {
                 }
             }
         });
+        button3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editorPane2.setText("");
+                File record = new File("Records/"+textField3.getText() + ".csv");
+                if(record.exists()){
+                    try {
+                        Scanner recordText = new Scanner(record);
+                        while(recordText.hasNext()) {
+                            setRecordText(recordText.nextLine());
+                        }
+                    }catch(IOException ex){
+
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Sorry the file could not be found!");
+                }
+            }
+        });
     }
     private void setMainText(String input){
+        int lineHeight = editorPane2.getFont().getSize();
         if(editorPane1.getText().equals("") ){
             editorPane1.setText(input);
             lineCount++;
 
-        }else if(lineCount == 32){
+        }else if(lineCount == ((editorPane2.getSize().height)/lineHeight)-20 ){
             editorPane1.setText(input);
             lineCount = 1;
         }
@@ -91,9 +112,17 @@ public class TimeClock extends JFrame {
             lineCount++;
         }
     }
+    public void setRecordText(String input){
+        if(editorPane2.getText().equals("") ){
+            editorPane2.setText(input);
+        }
+        else {
+            editorPane2.setText(editorPane2.getText() + "\n" + input);
+        }
+    }
     public static void main(String[] args) throws IOException {
         TimeClock tc = new TimeClock();
-        JFrame frame = new JFrame("TimeClock");
+
         frame.setContentPane(tc.panel1);
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -124,6 +153,7 @@ public class TimeClock extends JFrame {
             TimeKeeper.loadUsers(userList, passwordList);
         }
         setMainText("Users updated: " + userList.size() + " Users.");
+        lineCount++;
     }
 
     }

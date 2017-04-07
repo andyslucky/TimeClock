@@ -27,14 +27,6 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="ff9a4" class="javax.swing.JTextField" binding="textField1" default-binding="true">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
               <component id="19a2b" class="javax.swing.JEditorPane" binding="editorPane1" default-binding="true">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
@@ -52,6 +44,14 @@
                 <properties>
                   <text value="Login/ Logout"/>
                 </properties>
+              </component>
+              <component id="9a9f4" class="javax.swing.JPasswordField" binding="passwordField3" default-binding="true">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties/>
               </component>
             </children>
           </grid>
@@ -149,16 +149,8 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Enter the date of Thursday of the desired week(DDMMYYYY): "/>
+                  <text value="Enter the date of Thursday of the desired week:     MM,DD,YYYY "/>
                 </properties>
-              </component>
-              <component id="337fa" class="javax.swing.JTextField" binding="textField3" default-binding="true">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
               </component>
               <component id="dee6f" class="javax.swing.JButton" binding="button3" default-binding="true">
                 <constraints>
@@ -167,6 +159,14 @@
                 <properties>
                   <text value="Button"/>
                 </properties>
+              </component>
+              <component id="223ba" class="javax.swing.JTextField" binding="textField3" default-binding="true">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties/>
               </component>
             </children>
           </grid>

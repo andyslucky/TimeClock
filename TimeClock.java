@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -7,7 +8,7 @@ import java.util.*;
 import java.io.*;
 /**
  * Created by Andrew on 1/7/2017.
- * @version 1.20
+ * @version 1.25
  */
 public class TimeClock extends JFrame {
     private static JFrame frame = new JFrame("TimeClock");
@@ -152,9 +153,11 @@ public class TimeClock extends JFrame {
     }
     public static void main(String[] args) throws IOException {
         TimeClock tc = new TimeClock();
-
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        int width = gd.getDisplayMode().getWidth();
+        int height = gd.getDisplayMode().getHeight();
         frame.setContentPane(tc.panel1);
-        frame.setSize(800, 600);
+        frame.setSize(width-100, height-100);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
         tc.readIn();

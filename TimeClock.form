@@ -37,7 +37,7 @@
                   <editable value="false"/>
                 </properties>
               </component>
-              <component id="4da68" class="javax.swing.JButton" binding="loginButton">
+              <component id="4da68" class="javax.swing.JButton" binding="button1" default-binding="true">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -105,7 +105,7 @@
                   <toolTipText value=""/>
                 </properties>
               </component>
-              <component id="7fd4b" class="javax.swing.JButton" binding="addUserButton" custom-create="true">
+              <component id="7fd4b" class="javax.swing.JButton" binding="button2" default-binding="true">
                 <constraints>
                   <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -121,7 +121,7 @@
                   <text value="Confirm ID"/>
                 </properties>
               </component>
-              <component id="85588" class="javax.swing.JButton" binding="changeIDButton" default-binding="true">
+              <component id="6d852" class="javax.swing.JButton" binding="changeId">
                 <constraints>
                   <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -129,7 +129,7 @@
                   <text value="Change ID"/>
                 </properties>
               </component>
-              <vspacer id="9222a">
+              <vspacer id="15550">
                 <constraints>
                   <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -160,12 +160,12 @@
                   <text value="Enter the date of Thursday of the desired week:     MM,DD,YYYY "/>
                 </properties>
               </component>
-              <component id="dee6f" class="javax.swing.JButton" binding="recordsButton">
+              <component id="dee6f" class="javax.swing.JButton" binding="button3" default-binding="true">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Go"/>
+                  <text value="Button"/>
                 </properties>
               </component>
               <component id="223ba" class="javax.swing.JTextField" binding="textField3" default-binding="true">

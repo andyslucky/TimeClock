@@ -13,26 +13,27 @@ public class TimeClock extends JFrame {
     private static JFrame frame = new JFrame("TimeClock");
     private JPanel panel1;
     private JTabbedPane tabbedPane1;
-    private JButton loginButton;
+    private JButton button1;
     public JEditorPane editorPane1;
     private JTextField textField2;
     private JPasswordField passwordField1;
-    private JButton addUserButton;
+    private JButton button2;
     private JEditorPane editorPane2;
     private JPasswordField passwordField2;
     private JTextField textField3;
-    private JButton recordsButton;
+    private JButton button3;
     private JPasswordField passwordField3;
+    private JButton changeId;
     private JButton changeIDButton;
     private static final ArrayList<String> userList = new ArrayList<>();
     private static ArrayList<String> passwordList = new ArrayList<>();
     private static BufferedWriter bw;
     private static File data = new File("data.csv");
     private int lineCount = 0;
-    private final String NEWLINE = System.getProperty("line.separator");
+
     TimeClock() throws FileNotFoundException {
 
-        loginButton.addActionListener(new ActionListener() {
+        button1.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent ae) {
                 if(passwordList.contains(passwordField3.getText())) {
@@ -44,7 +45,7 @@ public class TimeClock extends JFrame {
 
             }
         });
-        addUserButton.addActionListener(new ActionListener() {
+        button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!passwordList.contains(passwordField1.getText())) {
@@ -52,9 +53,8 @@ public class TimeClock extends JFrame {
                         if(!passwordField1.getText().equals(passwordField2.getText())){
                             JOptionPane.showMessageDialog(null, "Sorry, ID fields do not match!");
                         }else {
-
+                            final String NEWLINE = System.getProperty("line.separator");
                             FileWriter out = new FileWriter(data);
-                            BufferedReader br = new BufferedReader(new FileReader(data));
                             bw = new BufferedWriter(out);
                             passwordList.add(passwordField1.getText());
                             userList.add(textField2.getText());
@@ -75,7 +75,7 @@ public class TimeClock extends JFrame {
                 }
             }
         });
-        recordsButton.addActionListener(new ActionListener() {
+        button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 editorPane2.setText("");
@@ -105,10 +105,25 @@ public class TimeClock extends JFrame {
 
             }
         });
-        changeIDButton.addActionListener(new ActionListener() {
+        changeId.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                        final String NEWLINE = System.getProperty("line.separator");
+                        FileWriter out = new FileWriter(data);
+                        bw = new BufferedWriter(out);
+                        passwordList.add(userList.indexOf(textField2.getText()), passwordField2.getText());
+                        int index = 0;
+                        while (index < passwordList.size() && index < userList.size()) {
+                            bw.write(passwordList.get(index) + "," + userList.get(index) + NEWLINE);
+                            index++;
+                        }
+                        bw.close();
+                        readIn();
 
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
     }
@@ -171,7 +186,4 @@ public class TimeClock extends JFrame {
         lineCount++;
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
     }
-}
